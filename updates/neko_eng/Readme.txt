@@ -10,4 +10,4 @@ http://mac.gn.to/
 Gallery DenenchofuÅ Shuichi Ono.
 
 English translation by Nekori
-https://mangaka-nekori.github.io/Ukagaka/neko.html
+https://mangaka-nekori.github.io/Ukagaka/eng/neko.html
