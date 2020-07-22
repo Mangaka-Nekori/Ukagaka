@@ -30,7 +30,7 @@ About Kitty (&R)
 1
 
 ＠homeurl
-http://mangaka-nekori.github.io/Ukagaka/updates/neko_eng/
+https://mangaka-nekori.github.io/Ukagaka/updates/neko_eng/
 
 ＠username
 （ユーザ名）
