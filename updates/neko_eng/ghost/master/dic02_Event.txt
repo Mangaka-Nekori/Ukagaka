@@ -228,7 +228,7 @@ shiori互換dll『里々（さとり）』用辞書
 
 ＊OnChoiceSelect
 ＞（Ｒ０）
-：ふみぃ。
+：Fumii.
 
 ＊OnChoiceTimeout
 ：（４０１）.....
