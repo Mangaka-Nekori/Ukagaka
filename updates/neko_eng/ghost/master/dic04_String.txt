@@ -1,0 +1,76 @@
+
+shiori互換dll『里々（さとり）』用辞書
+　
+　
+　メニューのボタン名とか。
+　ネットワーク更新の際のデータ置き場とか。
+　おすすめ／ポータルなURLの一覧とか。
+　
+
+
+＠portalrootbutton.caption
+Kitty Club (&P)
+
+＠recommendrootbutton.caption
+Kitty Cat Friends (&R)
+
+＠kero.recommendbuttoncaption
+none(&R)
+
+＠updatebutton.caption
+Nyetφworkφ Update (&U)
+
+＠vanishbutton.caption
+Throw Away (&F)
+
+＠readmebutton.caption
+About Kitty (&R)
+
+＠vanishbutton.visible
+1
+
+＠homeurl
+http://mangaka-nekori.github.io/Ukagaka/updates/neko_eng/
+
+＠username
+（ユーザ名）
+
+
+＊コメント
+
+　URL一覧は……
+
+　１行目がサイト名
+　２行目がジャンプ先URL
+　３行目がバナーURL（省略可）
+　４行目以降はジャンプ時に表示される会話文（省略可）
+
+
+＊sakura.portalsites
+Satori
+http://www.geocities.co.jp/SiliconValley-Cupertino/8536/
+
+＊sakura.portalsites
+Galleryφ Denenchofu
+http://mac.gn.to/
+
+＊sakura.portalsites
+Nekori'sφ Github
+http://mangaka-nekori.github.io/Ukagaka/index.html
+
+＊sakura.recommendsites
+Pet Plank
+http://users72.psychedance.com/up/u2/
+
+＊sakura.recommendsites
+Daifukuan
+http://www.terumer.com/~fuku/
+
+＊sakura.recommendsites
+Uφ Team.
+http://93chu.chu.jp/
+
+＊sakura.recommendsites
+Galleryφ Denechofuφ・Cat Warehouse
+http://f13.aaacafe.ne.jp/~nekolove/
+

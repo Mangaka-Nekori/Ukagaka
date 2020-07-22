@@ -1,0 +1,33 @@
+name,master
+id,cat
+type,shell
+craftman,Shuichi Ono
+craftmanw,Shuichi Ono
+craftmanurl,http://mac.gn.to/
+
+sakura.balloon.offsetx,0
+sakura.balloon.offsety,50
+kero.balloon.offsetx,0
+kero.balloon.offsety,300
+sakura.balloon.alignment,none
+kero.balloon.alignment,none
+
+menu.background.bitmap.filename,menu_background.png
+menu.foreground.bitmap.filename,menu_foreground.png
+menu.sidebar.bitmap.filename,menu_sidebar.png
+
+menu.background.font.color.r,80
+menu.background.font.color.g,80
+menu.background.font.color.b,80
+
+menu.foreground.font.color.r,0
+menu.foreground.font.color.g,0
+menu.foreground.font.color.b,0
+
+menu.separator.color.r,250
+menu.separator.color.g,250
+menu.separator.color.b,250
+
+menu.background.alignment,rightbottom
+menu.foreground.alignment,rightbottom
+menu.sidebar.alignment,bottom

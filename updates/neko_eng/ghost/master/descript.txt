@@ -1,0 +1,13 @@
+charset,UTF-8
+
+craftman,Shuichi Ono
+craftmanw,èShuichi Ono
+craftmanurl,http://mac.gn.to/
+
+name,Neko.
+type,ghost
+
+sakura.name,Neko
+kero.name,Air
+
+shiori,satori.dll
