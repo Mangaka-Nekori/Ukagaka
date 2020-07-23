@@ -56,7 +56,7 @@ http://mac.gn.to/
 
 –sakura.portalsites
 Nekori'sƒÓ Github
-https://raw.githubusercontent.com/mangaka-nekori/Ukagaka/eng/index.html
+https://mangaka-nekori.github.io/Ukagaka/eng/index.html
 
 –sakura.recommendsites
 Pet Plank
