@@ -336,8 +336,29 @@ OnUpdateComplete
 	}
  	else
 	{
-		"\0\s[0]Update installed successfully.\e"
+		askedalready = 0
+		--
+		OnChangeLog
+		//"\![raise,OnChangelog]"
  	}
+}
+
+OnUpdateVars
+{
+	version = "0.0.1 Beta"
+	"\0\s[0]Update installed successfully. Would you like to read the changelog from the Rhodes Island headquarters?\w8\w8/
+	\![*]\q[Yes,YesChangelog]\n/
+	\![*]\q[No,NoChangelog]\e"
+}
+
+Select.YesChangelog
+{
+	"\0\s[0]_q/Oh my god does this work please tell me this works I really really want this to work oh god does it work.\e"
+}
+
+Select.NoChangelog
+{
+	"\0\s[0]%(confirm)Understood.\e"
 }
 
  //---- OnUpdateFailure -------------------------------------------------------------
@@ -726,41 +747,6 @@ OnOtherGhostClosed
 	"\0\s[0]Thank you for your time, %(reference0).\e"
 }
 
-
-OnSchedule5MinutesToGo
-{
-	"\05 minutes to go %(reference0) %(reference1) %(reference2) %(reference3)\e"
-}
-
-OnScheduleRead
-{
-	"Read %(reference0) %(reference1) %(reference2) %(reference3)"
-}
-
-OnSchedulesenseBegin
-{
-	"Sense begin %(reference0)"
-}
-
-OnSchedulesensecomplete
-{
-	"Sense complete %(reference0) %(reference1)"
-}
-
-OnSchedulesenseFailure
-{
-	"Sense failure %(reference0)"
-}
-
-OnSchedulepostBegin
-{
-	"Schedule pose %(reference0)"
-}
-
-OnSchedulepostComplete
-{
-	"Post complete %(reference0)"
-}
 docsnd
 {
    "\_v[snd\doctor1.wav]"

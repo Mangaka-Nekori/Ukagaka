@@ -77,7 +77,7 @@ MenuRun
 	}
 	--
 	"\n[half]/
-	\![*]\q[Cancel,CANCEL]\n\n\n[half]%(wd) %(nowhour):%(nowmin) %(ap) %(month)/%(day)/%(year) - %(season)"
+	\![*]\q[Cancel,CANCEL]\n\n\n[half]%(wd) %(nowhour):%(nowmin) %(ap) %(month)/%(day)/%(year) - %(season)\n%(version)"
 }
 
 Select.altalk
