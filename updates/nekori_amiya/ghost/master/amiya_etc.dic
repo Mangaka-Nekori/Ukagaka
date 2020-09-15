@@ -321,7 +321,18 @@ OnUpdateBegin
 OnUpdateReady
 {
 	reference[0] += 1
-	"\0\s[0]%(docsnd)%(doctor), there are %(reference[0]) new files from the Rhodes Island neural network.\w8\e"
+	if reference[0] == 1
+	{
+		%(_isare) = "is"
+		%(_file) = "file"
+	}
+	else
+	{
+		%(_isare) = "are"
+		%(_file) = "files"
+	}
+	--
+	"\0\s[0]%(docsnd)%(doctor), there %(_isare) %(reference[0]) new %(_file) from the Rhodes Island neural network.\w8\e"
 }
 
 
