@@ -37,6 +37,7 @@ RandomTalk : nonoverlap
 	"\0\s[0]%(docsnd)%(doctor), make sure you're getting up to stretch every once in a while.\e"
 	"\0\s[0]I admire your work, but make sure you're caring for yourself, %(doctor).\e"
 	"\0\s[0]%(doctor)... I've recently been thinking about picking up the violin again... \nMaybe I can play something for you someday?\e"
+	"\0\s[0]%(doctor), make sure you're attending to your needs every oncce in a while. It doesn't help anyone if you don't take care of yourself.\e"
 	/*
 	//You can use the \w tag to time your dialogue. \w goes from 1-9, although I usually leave it at 8 to be safe, and while you can't go above 9, you can layer \w tags to add up to higher numbers. Here, \w8 and \w6 combine to make 14.
 	
