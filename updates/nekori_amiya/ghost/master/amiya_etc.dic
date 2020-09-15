@@ -726,6 +726,41 @@ OnOtherGhostClosed
 	"\0\s[0]Thank you for your time, %(reference0).\e"
 }
 
+
+OnSchedule5MinutesToGo
+{
+	"\05 minutes to go %(reference0) %(reference1) %(reference2) %(reference3)\e"
+}
+
+OnScheduleRead
+{
+	"Read %(reference0) %(reference1) %(reference2) %(reference3)"
+}
+
+OnSchedulesenseBegin
+{
+	"Sense begin %(reference0)"
+}
+
+OnSchedulesensecomplete
+{
+	"Sense complete %(reference0) %(reference1)"
+}
+
+OnSchedulesenseFailure
+{
+	"Sense failure %(reference0)"
+}
+
+OnSchedulepostBegin
+{
+	"Schedule pose %(reference0)"
+}
+
+OnSchedulepostComplete
+{
+	"Post complete %(reference0)"
+}
 docsnd
 {
    "\_v[snd\doctor1.wav]"
