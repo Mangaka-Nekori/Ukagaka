@@ -1,0 +1,417 @@
+﻿//---------------------------AI Talk--------------------------
+
+//--AiTalk
+AiTalk
+{
+	if RAND(100) < communicateratio
+ 	{
+ 		StartCommunicate
+	}
+ 	else
+	{
+ 		if mikireflag == 0
+		{
+			if CHAIN.IDName == "" {
+ 				lastTalk = RandomTalk
+			}
+			else {
+				lastTalk = ChainTalk
+			}
+			lastTalk
+		}
+ 		else
+		{ 
+			MikireTalk
+ 		}
+	}
+}
+
+//--RandomTalk
+RandomTalk : nonoverlap
+{
+	"\0\s[0]What are you doing, %(doctor)?\e"
+	"\0\s[0]%(doctor)!? What's this in your %(usersfolder)!?\e"
+	"\0\s[0]Are you working, %(doctor)?\e"
+	"\0\s[0]%(docsnd)%(doctor), make sure you're drinking plenty of water.\e"
+	"\0\s[0]Are you staying hydrated, %(doctor)?\e"
+	"\0\s[0]%(docsnd)%(doctor), make sure you're getting up to stretch every once in a while.\e"
+	"\0\s[0]I admire your work, but make sure you're caring for yourself, %(doctor).\e"
+	"\0\s[0]%(doctor)... I've recently been thinking about picking up the violin again... \nMaybe I can play something for you someday?\e"
+	/*
+	//You can use the \w tag to time your dialogue. \w goes from 1-9, although I usually leave it at 8 to be safe, and while you can't go above 9, you can layer \w tags to add up to higher numbers. Here, \w8 and \w6 combine to make 14.
+	
+	"\0\s[0]I am pausing \w4for dramatic \w6emphasis. \w8P\w6 - \w6A - \w6U - \w6S - \w6E.\e"
+	
+	//You can also pause multiple times within sentences, like so. At the end, you can pause between letters if your ghost is spelling something.
+	
+	"\0\s[0]Here is dialogue on one line.\nHere is dialogue on the next line.\e"
+	
+	//You can use \n to move dialogue down one line, like hitting enter once. 
+
+	"\0\s[0]Here I'll use the envelope 'exampleenvelope' to show what it looks like in a balloon.\w8\0\s[0]%(exampleenvelope).\e"
+
+	//And here are more examples using the blanklists I set up in word.dic.
+	
+	"\0\s[0]Here I'll use the envelope 'usersfolder' to pretend to look at the user's files. \w8\0\s[0]What's that in %(usersfolder)?\e"
+	
+	//You can use the usersfolder envelope creatively if you like, haha.
+	
+	"\0\s[0]Here I'll use the envelope 'internalenvelope' to show an envelop containing another envelope. \w8\0\s[0]%(internalenvelope).\e"
+	
+	//Here's an example using the internal envelope I mentioned in word.dic.
+	
+	"\0\s[0]Here is dialogue referring to Anchor 1. Here is dialogue referring to Anchor 2 and Anchor 3.\e"
+	
+	//Anchor words are defined more in anchor.dic. Note here when you see this dialogue that Anchor 1, 2, and 3 become links when spoken, even if they weren't written as links in the dialogue in this file. This is why anchor words are convenient, you don't have to set up link code every time they say a certain word. Try clicking the links when they appear to see what they lead to. It'll give you an idea of exactly how anchors work.
+	
+	
+	//--Chains
+	//Chain dialogue is unique. A dialogue chain consists of multiple bits of dialogue that get called in order over a period of time.
+	
+	"\0\s[0]This is the first part of a chained dialogue.\e:chain=firstchain"
+	
+	//Note here that instead of ending the dialogue with the normal end tag of \e, it ends with \e:chain=firstchain. This will link down below to a chunk of code outside RandomTalk called firstchain. You can scroll down and find it now if you want. You can name your chain anything you want, it'd just follow the same format of \e:chain=yourchainsname, and you can have a long series of chains as well. Once a dialogue has entered a chain, they won't say any other random dialogue until the chain is finished.
+	
+	"\0\s[0]This will lead to the second piece of chained dialogue.\e:chain=secondchain"
+	
+	//Here, this chain will link to another chain to continue the conversation. You can scroll down to the section on chains to see this in action.
+	*/
+	
+	//--If statements
+	//You can put if statements in RandomTalk! They don't even need Else statements, unless you want to keep two sets of statements completely separate - for example, you have one pool of conversations for when there are two characters, and one for if there are three characters. You wouldn't want these to overlap, so you'd put one pool in the if statement and the other in the else. Most of the time though, you won't need an Else statement for these, since they'll mostly only be adding in dialogue if the if statement is true. 
+	/*
+	if nowshell == "master" //This checks to see what shell they're currently using. You may remember this value being defined back in bootend.dic. If they're in their default shell...
+	{
+		"\0\s[0]Here is dialogue related to the default shell.\e"
+	}*/
+	
+	//You can also put in multiple ifs checking for the same thing to vary the responses. In this case, it's checking to see if they're wearing another shell. You don't need to use elseifs for this! Just an if is fine.
+	if nowshell == "Swimsuit"
+	{
+		"\0\s[0]So are we going to go swiming or...?\e"
+	}
+	
+	if nowshell == "Bunny Suit"
+	{
+		"\0\s[0]Um... %(doctor)... \nIs it really necessary for me to wear this?\e"
+	}
+	
+	/*
+	if month >= 12
+	{
+		"\0\s[0]This is dialogue for December.\e"
+		"\0\s[0]This is more dialogue for December.\e"
+	}
+	
+	//So you can use these to check for any number of situations. I think this feature is really neat, so I'm going to set up some quick default responses for the months, days, and time of day. If you don't want to do these, you can just delete this whole set of ifs down to the //--Double Envelopes section below.
+	//You can also nest ifs within these, so you could check if it was the 25 of April in the morning for example. You can also add or take away dialogue from these as you like, so if you want to have five dialogue options for April or one for January, you can totally do that.
+	
+	if month == 1
+	{
+		"\0\s[0]This is dialogue for January.\e"
+		"\0\s[0]This is more dialogue for January.\e"
+	}
+	if month == 2
+	{
+		"\0\s[0]This is dialogue for February.\e"
+		"\0\s[0]This is more dialogue for February.\e"
+	}
+	if month == 3
+	{
+		"\0\s[0]This is dialogue for March.\e"
+		"\0\s[0]This is more dialogue for March.\e"
+	}
+	if month == 4
+	{
+		"\0\s[0]This is dialogue for April.\e"
+		"\0\s[0]This is more dialogue for April.\e"
+	}
+	if month == 5
+	{
+		"\0\s[0]This is dialogue for May.\e"
+		"\0\s[0]This is more dialogue for May.\e"
+	}
+	if month == 6
+	{
+		"\0\s[0]This is dialogue for June.\e"
+		"\0\s[0]This is more dialogue for June.\e"
+	}
+	if month == 7
+	{
+		"\0\s[0]This is dialogue for July.\e"
+		"\0\s[0]This is more dialogue for July.\e"
+	}
+	if month == 8
+	{
+		"\0\s[0]This is dialogue for August.\e"
+		"\0\s[0]This is more dialogue for August.\e"
+	}
+	if month == 9
+	{
+		"\0\s[0]This is dialogue for September.\e"
+		"\0\s[0]This is more dialogue for September.\e"
+	}
+	if month == 10
+	{
+		"\0\s[0]This is dialogue for October.\e"
+		"\0\s[0]This is more dialogue for October.\e"
+	}
+	if month == 11
+	{
+		"\0\s[0]This is dialogue for November.\e"
+		"\0\s[0]This is more dialogue for November.\e"
+	}
+	//These ifs check what day of the week it is.
+	if weekday == 1
+	{
+		"\0\s[0]This is dialogue for Monday.\e"
+		"\0\s[0]This is more dialogue for Monday.\e"
+	}
+	if weekday == 2
+	{
+		"\0\s[0]This is dialogue for Tuesday.\e"
+		"\0\s[0]This is more dialogue for Tuesday.\e"
+	}
+	if weekday == 3
+	{
+		"\0\s[0]This is dialogue for Wednesday.\e"
+		"\0\s[0]This is more dialogue for Wednesday.\e"
+	}
+	if weekday == 4
+	{
+		"\0\s[0]This is dialogue for Thursday.\e"
+		"\0\s[0]This is more dialogue for Thursday.\e"
+	}
+	if weekday == 5
+	{
+		"\0\s[0]This is dialogue for Friday.\e"
+		"\0\s[0]This is more dialogue for Friday.\e"
+	}
+	if weekday == 6
+	{
+		"\0\s[0]This is dialogue for Saturday.\e"
+		"\0\s[0]This is more dialogue for Saturday.\e"
+	}
+	if weekday == 7
+	{
+		"\0\s[0]This is dialogue for Sunday.\e"
+		"\0\s[0]This is more dialogue for Sunday.\e"
+	}
+	//These ifs check for the time of day as defined in bootend.dic. Do you remember the words used for each chunk of time in GetTimeSlot? These are the same words!
+	if timeslot == "earlymorning"
+	{
+		"\0\s[0]This is dialogue for the early morning.\e"
+		"\0\s[0]This is more dialogue for early morning.\e"
+	}
+	if timeslot == "morning"
+	{
+		"\0\s[0]This is dialogue for the morning.\e"
+		"\0\s[0]This is more dialogue for the morning.\e"
+	}
+	if timeslot == "lunch"
+	{
+		"\0\s[0]This is dialogue for lunch time.\e"
+		"\0\s[0]This is more dialogue for lunch time.\e"
+	}
+	if timeslot == "afternoon"
+	{
+		"\0\s[0]This is dialogue for the afternoon.\e"
+		"\0\s[0]This is more dialogue for the afternoon.\e"
+	}
+	if timeslot == "evening"
+	{
+		"\0\s[0]This is dialogue for the evening.\e"
+		"\0\s[0]This is more dialogue for the evening.\e"
+	}
+	if timeslot == "latenight"
+	{
+		"\0\s[0]This is dialogue for the late night.\e"
+		"\0\s[0]This is more dialogue for the late night.\e"
+	}
+	if timeslot == "midnight"
+	{
+		"\0\s[0]This is dialogue for midnight.\e"
+		"\0\s[0]This is more dialogue for midnight.\e"
+	}
+	
+	//--Multiple Responses
+	//If you've poked around menu.dic or string.dic or read the walkthrough, you may have seen me touch on setting multiple options for any one given bit of dialogue. This kind of dialogue follows much the same format.
+	
+	{
+	"\0\s[0]I will say a random color. \w8The color is " 
+	-- //opening dashes
+	"green"
+	"red"
+	"purple"
+	"orange"
+	"yellow"
+	"\s[8]magenta" //Notice here I added a tag for his thoughtful pose. If he chooses magenta, he'll do this pose. You can set up individual expressions for each potential choice this way.
+	-- //closing dashes
+	". \w8This is the end of the dialogue.\e"
+	
+	//You can see that this follows the formula of the above, although there's only one set of multiple responses in here, then Triangle continues with his sentence. You can use this feature in many different ways if you're creative.
+	}
+	
+	"\0\s[0]\f[height,20]These words are really large. \f[height,default]These words are a normal size. \w8\f[height,6]These words are small.\f[height,default]\e"
+	
+	//You can use other fancier SakuraScript bits in your dialogue if you want to get font effects, although I won't get too much into them here. In this case, \f[height,20] changes the height of the font, in this case to 20 or to 6, and then \f[height,default] changes them back to normal. I touch more on this in the SakuraScript page of the walkthrough.
+	
+	"\0\s[0]\f[strike,true]These words are struck out.\f[strike,default]\w8 \f[sub,true]These words are a subscript.\f[sub,false] \f[sup,true]These words are a superscript.\f[sup,false] \f[underline,true]These words are underlined.\f[underline,default] \f[bold,true]These words are bold.\f[bold,false] \f[italic,true]These words are italic.\f[italic,false] \f[color,186,146,112]These words are a color.\f[color,default] This tag would return to default.\f[default]\e"
+	
+	//Here's a list of similar tags you may find useful. You can see they function much like <b> or <i> tags in html. You just enclose the piece of text you want to change with them. Note that they start with \f[word,true] to turn it on, then \f[word,false] or \f[word,default] to turn it off. I assume you can tell what the tags do by the text they enclose.
+	//For the \f[color] tag, the three colors listed are the RGB values of the color you want to use for your text. Change them to whatever color you want to use. \f[default] can be an easy way to quickly go back to the default word setting in your balloon after messing with colors and effects a lot.
+	
+	"\0\s[0]Here's a link to a website. \_a[http://www.website.com/]Right here.\_a\e"
+	*/
+	//Along the same lines as above, you can use \_a[address] to link to certain things. Note that it ends with \_a to close the link. It's very similar to <a href=address> and </a> in html.
+	
+	//And so we reach the end of randomtalk! I again reiterate, YOU CAN AND SHOULD WRITE YOUR OWN NEW LINES OF DIALOGUE FOR THIS! I included some random example phrases here for you just to replace the text, but there really aren't that many. You'll want to add more, and doing so is easy! Just copy and paste a line and redo the text. Repeat as many times as you want with as many conversations as you want. You can always expand this section!
+}
+
+//--Chains
+firstchain
+{{CHAIN
+	"\0\s[0]Here is the second part of the chain.\e:chain=end"
+}}CHAIN
+
+secondchain
+{{CHAIN
+	"\0\s[0]This is the second piece of chained dialogue.\e"
+	"\0\s[0]This is the third piece of chained dialogue.\e:chain=end"
+}}CHAIN
+
+//-OnMinuteChange
+OnMinuteChange
+{
+	timeslot = GetTimeSlot
+	--
+ 	if minute == 0
+	{
+		if updatenotify == "ON" && updateask == 0 && updateavailable == 0 && UpdateAutoCheck == 0
+		{
+			AutoUpdateCheck = 1
+			"\![updatebymyself,checkonly]"
+		}
+		--
+		if servernotify == "YES" && setservertime == "true" && hour == servertime
+		{
+			"\0\s[0]%(docsnd)Doctor, the Arknights server has reset. Don't forget to claim your rewards.\e"
+		}
+		else
+		{
+			if hour == 12
+			{
+				"\0\s[0]It's noon.\e"
+			}
+			elseif hour == 0 && month == 1 && day == 31
+			{
+				"\0\s[0]Happy New Years, %(doctor)! Let's work hard this year too, alright?\e"
+				--
+				updateask = 0
+				UpdateAutoCheck = 0
+			}
+			elseif hour == 0
+			{
+				"\0\s[0]It's midnight, %(doctor).\e"
+				--
+				updateask = 0
+				UpdateAutoCheck = 0
+			}
+			elseif hour == 23
+			{
+				if minute == 55
+				{
+					if month == 12 && day == 31
+					{
+						"\0\s[0]5 minutes to the new year, %(doctor).\e"
+					}
+					else
+					{
+						"\0\s[0]5 minutes to midnight.\e"
+					}
+				}
+				else
+				{
+					"\0\s[0]It's 11 pm.\e"
+				}
+			}
+			elseif hour == 7 && minute == 30 && weekday == 0
+			{
+				"\0\s[0]It's 7:30 on Sunday.\e"
+			}
+			else
+			{
+				"\0\s[0]%(doctor), it's %(hour12)'o clock. "
+				--
+				"\0\s[0]Have you checked the material stock yet?\e"
+				"\0\s[0]It's time for some LMD runs.\e"
+				"\0\s[0]Our Operators need class chips, you need to do some runs to get them!\e"
+				"\0\s[0]You better not be using our resources on the Gacha.\e"
+				if RAND(10000) < 7
+				{
+					"Are you winnin', %(doctor)?\e"
+				}
+			}
+		}
+	}
+	elseif mikireflag == 1
+ 	{
+ 		MikireTalk
+	}
+}
+
+//--OnSecondChange
+OnSecondChange
+{
+	if passsec == 59
+ 	{
+		passsec = 0
+		passmin = passmin + 1
+	}
+ 	else
+ 	{
+		passsec = passsec + 1
+	}
+	if mikireflag == 1 && reference1 == 0
+	{
+		EndMikireTalk
+ 	}
+	mikireflag = reference1
+}
+
+//---- MikireTalk ---------------------------------------------------------------------
+MikireTalk
+{
+	"\0\s[0]Where'd you go, %(doctor)?\e"
+	"\0\s[0]Where are you, %(doctor)?\e"
+	"\0\s[0]%(doctor)?\e"
+}
+
+//----EndMikireTalk--------------------------------------------------------------------
+EndMikireTalk
+{
+	"\0\s[0]Ah, there you are, %(doctor). I was worried.\e"
+	"\0\s[0]There you are, %(doctor). Please don't leave me again...\e"
+}
+
+OnSurfaceRestore
+{
+	"\1\s[-1]\0\s[0]\e"
+}
+ 
+//--Hotkeys
+OnKeyPress
+{
+	if reference0 == "t"
+	{
+		OnAiTalk
+	}
+	elseif reference0 == "r"
+	{
+		OnLastTalk
+	}
+	elseif reference0 == "f1"
+	{
+		"\![open,readme]"
+	}
+}

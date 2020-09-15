@@ -1,0 +1,67 @@
+﻿//Amiya Default Outfit
+
+seriko.alignmenttodesktop,bottom
+
+charset,UTF-8
+type,shell
+name,Default Outfit
+accept,Amiya
+craftman,Nekori
+craftmanurl,http://mangaka-nekori.github.io/Ukagaka/eng/index.html
+
+kero.seriko.alignmenttodesktop,free
+
+//get rid of PNAs
+seriko.use_self_alpha,1
+
+//Balloon Coords
+sakura.balloon.offsetx,110
+sakura.balloon.offsety,116
+sakura.balloon.alignment,none
+
+//Shiori Icon
+shiori.logo.filename,resources\niseshiori.png
+shiori.logo.x,16
+shiori.logo.y,256
+
+
+//Menu Font Color
+menu.background.font.color.r,215
+menu.background.font.color.g,221
+menu.background.font.color.b,223
+
+
+//Menu Highlighted Text Color
+menu.foreground.font.color.r,140
+menu.foreground.font.color.g,144
+menu.foreground.font.color.b,148
+
+
+//Menu Greyed Out Font Color
+menu.disable.font.color.r,120
+menu.disable.font.color.g,124
+menu.disable.font.color.b,128
+
+
+//Menu Separator Color
+menu.separator.color.r,255
+menu.separator.color.g,255
+menu.separator.color.b,255
+
+
+//Menu Background Image Alignment
+menu.background.alignment,righttop
+menu.foreground.alignment,righttop
+menu.sidebar.alignment,bottom
+
+
+//Menu Background Image Location
+menu.background.bitmap.filename,menu\menu_background.png
+menu.foreground.bitmap.filename,menu\menu_foreground.png
+menu.sidebar.bitmap.filename,menu\menu_sidebar.png
+
+//--Dress-up
+sakura.bindgroup100.name,Accessories,Glasses
+
+//Dress-Up Menu Organization
+sakura.menuitem0,100

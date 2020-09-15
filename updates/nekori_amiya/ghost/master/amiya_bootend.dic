@@ -1,0 +1,379 @@
+﻿//---------------------------Booting and Ending--------------------------
+
+OnFirstBoot
+{
+ 	lastTalk = ""
+	passmin = 0 
+	passsec = 0
+	stroke           = 0
+ 	teachusername    = 0
+	mikireflag       = 0
+ 	aitalkinterval = 300
+ 	birthdayprint = "????"
+	talktime = "5 minutes"
+	deleteshitai = "OFF"
+	nowshell = "master"
+	nowmode = "BOOTING"
+	calldokutah = "NO"
+	updatenotify = "OFF"
+	updateavailable = 0
+	servernotify = "NO"
+	setservertime = "false"
+	debug = 0
+	
+	if reference0 == 0
+ 	{
+		"\![enter,passivemode]\0\s[0]%(doctor)...?\x\cI'm so happy... %(doctor)...\n\n[half]/
+		\![*]\q[Who... are you?,whoareyou]\e"
+	}
+	else
+ 	{
+ 		{
+			"\0\s[0]%(doctor)!!\x\cYou thought you could uninstall me to get away from having to work!?\e"
+			"\0\s[0]You didn't recruit a new operator girl while I was gone, did you? Am I not enough for you, %(doctor)?\e"
+		}
+ 	}
+}
+
+Select.whoareyou
+{
+	"\0\s[0]Ah, %(doctor)... It's me...\x\c...\x\cIt's me, Amiya.\x\cI've come to rescue you, from, uh... your daily life, I guess.\x\cIn other words, I'm here to be your secretary.\n\n[half]/
+	\![*]\q[Cool,iscool]\n/
+	\![*]\q[...Who... am I...?,sassychild]\e"
+}
+
+Select.iscool
+{
+	"\0\s[0]First, I'll teach you how to use the interface.\x\cRight-click me to pull up the SSP menu.\x\cHere, you can deploy another Operator from the deploy option, or change to another Operator from the change option.\x\cIf you decide you want to withdraw me, you can select 'Withdraw Operator'. Or, if you decide you want to exit SSP altogether, select the 'End Operation' button.\x\cFurthermore, you can minimize me by selecting 'Minimize', or you can minimize all Operators by clicking ctrl+I.\x\cNext, you can double click me to bring up my menu. I can do several things for you if you just ask, and you can also change your preferences in configuration.\x\cNow that we're through that, I'll leave you to your devices. It's a pleasure to work with you again, %(doctor).\x\c\![raise,OnEndFirstBoot]\e"
+}
+	
+Select.sassychild
+{
+	"\0\s[0]You know who you are, you had to sit here and log into this computer!!\x\cJeez, take this more seriously, would you...\x\c*sigh*\nSo anyway, if you're listening, I'll teach you how to use the interface.\x\cRight-click me to pull up the SSP menu.\x\cHere, you can deploy another Operator from the deploy option, or change to another Operator from the change option.\x\cIf you decide you want to withdraw me, you can select 'Withdraw Operator'. Or, if you decide you want to exit SSP altogether, select the 'End Operation' button.\x\cFurthermore, you can minimize me by selecting 'Minimize', or you can minimize all Operators by clicking ctrl+I.\x\cNext, you can double click me to bring up my menu. I can do several things for you if you just ask, and you can also change your preferences in configuration.\x\cNow that we're through that, I'll leave you to your devices. It's a pleasure to work with you again, %(doctor).\x\c\![raise,OnEndFirstBoot]\e"
+}
+
+OnEndFirstBoot
+{
+	nowmode = "NORMAL"
+	"\![leave,passivemode]\e"
+}
+
+//--Variables to set on boot
+BootVars
+{
+	lastTalk = ""
+	passmin = 0
+	passsec = 0
+	UpdateAutoheck = 0
+}
+
+//--GetTimeSlot
+GetTimeSlot
+{
+	if hour >= 5 && hour <= 8
+	{
+		"earlymorning"
+	}
+	elseif hour >= 9 && hour <= 11
+	{
+		"morning"
+	}
+	elseif hour >= 12 && hour <= 14
+	{
+		"lunch"
+	}
+	elseif hour >= 15 && hour <= 17
+	{
+		"afternoon"
+	}
+	elseif hour >= 18 && hour <= 20
+	{
+		"evening"
+	}
+	elseif hour >= 21 && hour <= 24
+	{
+		"latenight"
+	}
+	else
+	{
+		"midnight"
+	}
+}
+
+//--GetDaySlot
+GetDaySlot
+{
+	"%(month)month %(day)day"
+}
+
+//--OnBoot
+OnBoot
+ {
+	BootVars
+ 	"\1\s[-1]\0\s[0]"
+	--
+	dayslot = GetDaySlot
+	timeslot = GetTimeSlot
+	
+	if dayslot == userbirthday
+	{
+		"\0\s[0]%(doctor), tanjoubi!\e" 
+	}
+	elseif dayslot == "12month 23day"
+	{
+		"\0\s[0]Ah, hello %(doctor). Did you come to wish me a happy birthday?\e"
+	}
+	elseif dayslot == "7month 4day"
+	{
+		"\0\s[0]It's the fourth of July.\e"
+	}
+	else
+	{
+		"%(normalboottalk)"
+	}
+}
+
+//--normalboottalk
+normalboottalk
+{
+	if weekday == 6 && hour >= 19
+	{
+		"\0\s[0]It's Saturday night.\e"
+	}
+	elseif RAND(100) < 40
+	{
+		"\0\s[0]\_v[snd\okaeri.wav]Welcome home, %(doctor).\e"
+		"\0\s[0]I came as soon as you called, %(doctor).\e"
+	}
+ 	else
+ 	{
+		if timeslot == "earlymorning"
+		{
+			"\0\s[0]Good morning, %(doctor). You're up early.\w8\nLet's get a lot of work done today, okay?\e"
+			"\0\s[0]Ah, %(doctor). You're up early.\w8\w8\n...Either that or you stayed up all night.\e"
+		}
+		elseif timeslot == "morning"
+		{
+			"\0\s[0]Good morning, %(doctor). We have work to do.\e"
+			"\0\s[0]This is another morning boot dialogue\e"
+		}
+		elseif timeslot == "lunch"
+		{
+			"\0\s[0]This is a lunch boot dialogue.\e"
+			"\0\s[0]This is another lunch boot dialogue.\e"
+		}
+		elseif timeslot == "afternoon"
+		{
+			"\0\s[0]This is an afternoon boot dialogue.\e"
+		}
+		elseif timeslot == "evening"
+		{
+			"\0\s[0]This is an evening boot dialogue, between the hours of 18 and 20.\e"
+		}
+		elseif timeslot == "latenight"
+		{
+			"\0\s[0]This is a late night boot dialogue, between 21 and 24.\e"
+			"\0\s[0]This is another late night boot dialogue.\e"
+			"\0\s[0]This is the third late night boot dialogue, between 21 and 24.\e"
+		}
+		else
+		{
+			"\0\s[0]This is a middle of the night boot dialogue, from midnight to five.\e"
+			"\0\s[0]This is another middle of the night boot dialogue.\e"
+			"\0\s[0]This is the third middle of the night boot dialogue, very late at night.\e"
+		}
+	}
+}
+
+//--OnClose
+OnClose
+{
+	timeslot = GetTimeSlot
+	--
+	if passmin >= 5
+	{
+		if RAND(100) < 40
+		{
+			"\0\s[0]There's still lots of work to be done, %(doctor). You can't rest now!"
+		}
+		else
+		{
+			if timeslot == "earlymorning"
+			{
+				"\0\s[0]This is an early morning close dialogue, from 5 to 8."
+				"\0\s[0]This is another early morning close dialogue."
+			}
+			elseif timeslot == "morning"
+ 			{
+ 				"\0\s[0]This is a morning close dialogue."
+ 			}
+ 			elseif timeslot == "lunch"
+ 			{
+ 				"\0\s[0]This is a lunch close dialogue."
+ 				"\0\s[0]This is another lunch close dialogue."
+ 			}
+ 			elseif timeslot == "afternoon"
+ 			{
+ 				"\0\s[0]This is an afternoon close dialogue."
+ 				"\0\s[0]This is another afternoon close dialogue."
+ 			}
+  			elseif timeslot == "evening"
+ 			{
+ 				if weekday == 6
+ 				{
+ 					"\0\s[0]This is a Saturday evening close dialogue."
+ 				}
+ 				else
+ 				{
+ 					"\0\s[0]This is an evening close dialogue."
+ 					"\0\s[0]This is another evening close dialogue."
+ 				}
+ 			}
+			elseif timeslot == "latenight"
+			{
+ 				if weekday == 6
+ 				{
+ 					"\0\s[0]This is a late Saturday night close dialogue."
+ 					"\0\s[0]This is another late Saturday night close dialogue."
+ 				}
+ 				"\0\s[0]This is a late night close dialogue."
+				"\0\s[0]This is another late night close dialogue."
+ 			}
+			else
+ 			{
+ 				if weekday == 0
+ 				{
+ 					"\0\s[0]This is a middle of the night Sunday close dialogue."
+ 				}
+				"\0\s[0]This is a middle of the night close dialogue."
+				"\0\s[0]This is another middle of the night close dialogue."
+				"\0\s[0]This is the third middle of the night close dialogue."
+			}
+		}
+ 	}
+ 	else
+ 	{
+ 		"\0\s[0]There's still lots of work to be done, %(doctor). \w8You can't rest now!"
+ 		"\0\s[0]This is another bit of dialogue for closing me before five minutes have passed."
+ 	}
+ 	--
+	"\w8\w8\-\e"
+}
+
+ //-------------------------State Changing--------------------
+
+//--OnWindowStateRestore
+OnWindowStateRestore
+{
+	"\0\s[0]W-what was that, %(doctor)?\e"
+	"\0\s[0]Uwhaa...\e"
+}
+
+//--OnGhostChanging
+OnGhostChanging
+{
+	if reference0 == "Amiya"
+	{
+		"\0\s[0]\_v[snd\amiya_12.wav]Got it. I'll be prompt, %(doctor)."
+		"\0\s[0]\_v[snd\amiya_13.wav]Understood. Just a moment."
+	}
+ 	else
+	{
+		"\0\s[0]This dialogue means I'm switching to %(reference0)."
+	}
+	--
+	"\w8\w8\e"
+}
+
+//--OnGhostChanged
+OnGhostChanged
+{
+	"\1\s[-1]\0\s[0]"
+	--
+	if reference0 == "Amiya"
+	{
+		"\0\s[0]I've returned, %(doctor)."
+		"\0\s[0]\_v[snd\amiya_14.wav]I'm here, %(doctor)."
+	}
+	else
+	{
+		BootVars
+		"\0\s[0]Goodbye, %(reference0). \w8Someone switched from you to me."
+	}
+	--
+	"\e"
+}
+
+
+//--OnShellChanging
+OnShellChanging
+{
+	if reference0 == "Swimsuit"
+	{
+		"\0\s[0]Ah, a swimsuit...? If you insist, %(doctor)..."
+	}
+	elseif reference0 == "Bunny Suit"
+	{
+		"\0\s[0]Ah, what's this...?"
+	}
+	else
+	{
+		"\0\s[0]This dialogue is for changing shells."
+		"\0\s[0]This is another bit of dialogue for changing shells."
+	}
+	--
+	"\w8\e"
+}
+
+//--OnShellChanged
+OnShellChanged
+{
+ 	if reference0 == "Default Outfit"
+ 	{
+ 		nowshell = "master"
+ 		"\0\s[0]This dialogue is for switching to my default shell.\e"
+ 	}
+ 	elseif reference0 == "Swimsuit"
+ 	{
+ 		nowshell = "swimsuit"
+		if season == "Winter"
+		{
+			"\0\s[0]D-%(doctor)... Is this really necessary...? I'm cold...\e"
+		}
+		else
+		{
+			"\0\s[0]How does it look?\e"
+			"\0\s[0]I'm not showing too much skin, am I...?\e"
+		}
+ 	}
+ 	elseif reference0 == "Bunny Suit"
+ 	{
+ 		nowshell = "bunnysuit"
+ 		"\0\s[0]%(doctor)... Does this fit your tastes...?\e"
+		"\0\s[0]See? I'm not a donkey, I'm a bunny!\e"
+ 	}
+ 	else
+	{
+		nowshell = "undefined"
+		"\0\s[0]This dialogue is after I've changed my shell to %(reference[0]).\e"
+	}
+}
+
+ //--OnDressupChanged
+OnDressupChanged
+{
+	if reference0 == 0
+	{
+		if reference1 == "Clothing"
+		{
+			if reference2 == 1
+			{
+				"\0\s[0]You put my clothing item on me.\e"
+			}
+			else
+			{
+				"\0\s[0]You took the clothing item off.\e"
+			}
+		}		
+	}
+}

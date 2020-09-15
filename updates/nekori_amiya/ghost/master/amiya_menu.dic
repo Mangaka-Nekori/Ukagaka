@@ -1,0 +1,723 @@
+﻿//---------------------------Menus--------------------------
+//This .dic file is primarily concerned with the double-click menus for each of your ghosts. If you don't want to have menus for your characters, you'd just have to delete the OnMouseDoubleClick functions near the end of mouse.dic and then ignore this file, as none of it will be called I believe. Menus can be cool though, since you can put stuff in them and create new functions if you know what you're doing. For example, I've added a lot of games and interactions and little linked icons to my Hunter Smoker ghost to keep track of their feelings and such. Much of that is pretty complicated though (and kind of messy, cough), so I won't go into it here, but I covered some of the concepts in the coding page of the walkthrough, and enterprising ghost makers can study the menu.dic file I set up for Hunter/Smoker and see how I put it together.
+//Anyway, menu.dic also contains the settings for a config menu that will let your user change their name or pronouns if they want, as well as the talk rate of the ghost, all of which are useful things for your ghost to do. So think hard about whether or not you want to skip this file or not.
+
+//The complexity of this file depends on how customized you want your menus. If you just want to leave them as they are, then all you'll have to do is replace dialogue appropriately. You can always add stuff to their menus later if you get the urge. Otherwise, if you have plans in mind, you'll need to study what's going on in here carefully and pay attention to how things are set up! You can do a lot of unique stuff in this file if you're creative.
+
+//Make sure to read the walkthrough (http://www.ashido.com/ukagaka/walkthrough.html) for more details about how to properly format ghost dialogue!
+//I will reiterate that you should be editing these in Notepad++, and in particular, you should set the Language to C (or Java I guess) to properly highlight all the text. It will make things A LOT EASIER for you, trust me! It will also help you keep track of your brackets in case you forget some. If you click on a line with a bracket in Notepad++, it should highlight where the other bracket ends, or turn purple if there's no finishing bracket (which you should definitely fix!)
+//It will also highlight my commented lines in green, so you'll know where they are. Any line beginning with // is a commented line that the code will not read. It's just for your reference!
+
+
+//--OpenSakuraMenu
+//This is a bit of intro dialogue before the main character opens their menu. You can see below that there are three pieces of separate dialogue listed before it goes to MenuRun. The character will randomly choose one of those pieces of dialogue before opening the rest of their menu. You can customize this with individual greetings for the character, such as "Yes, %(username)?" or "Need something, %(username)?" or things like that. Note that none of the lines end with \e!
+//The \b2 tag tells the ghost to use their big balloon for this dialogue. If your menu has a lot of stuff, this'll probably look better than the small one.
+
+OpenSakuraMenu
+{
+	if updatenotify == "ON" && updateavailable == 1
+	{
+		"\0\s[0]%(doctor), there's a new update available. Shall I download it now?\n\n[half]/
+		\![*]\q[Download it,updatecheck]\n/
+		\![*]\q[Later,updatelater]\n/
+		\![*]\q[Turn off update notifications,dontnotifyupdate]\e"
+	}
+	else
+	{
+		"\0\s[0]%(docsnd)\b2"
+		--
+		"%(doctor)?"
+		"Yes %(doctor)?"
+		"You needed something, %(doctor)?"
+	}
+	--
+	MenuRun
+}
+
+Select.updatelater
+{
+	updateavailable = 0
+	updateask = 1
+	"\0\s[0]I understand. You can ask me to update when you're ready, or you can click Ctrl + U. The update option is also available towards the top of the right-click menu.\e"
+}
+
+Select.dontnotifyupdate
+{
+	updatenotify = "OFF"
+	updateavailable = 0
+	"\0\s[0]I understand. If you decide you want me to notify you again, you can turn notifications back on in the configuration menu.\e"
+}
+
+//--MenuRun
+MenuRun
+{	
+ 	wd = GetWeekDay
+ 	ap = GetAP
+ 	nowmin = Getnowmin
+ 	nowhour = Getnowhour
+	--
+	"\n\n\_q\b2"
+	--
+	if lastTalk != ""
+	{
+		"\![*]\q[Repeat Last Dialogue,OnLastTalk]\n\n[half]"
+	}
+	--
+ 	"\![*]\q[Say something,altalk]\n"
+	"\![*]\q[Talk to me,altalk]\n"
+	--
+	"\![*]\q[Configuration,configmenu]\n/
+	\![*]\q[Could you do something for me?,dosomething]\n\n[half]/
+	\![*]\q[Update,updatecheck]\n/
+ 	\![*]\q[Bug report,bugreport]\n"
+	--
+	if debug == 1
+	{
+		"\![*]\q[Test variable,testvariable]\n"
+	}
+	--
+	"\n[half]/
+	\![*]\q[Cancel,CANCEL]\n\n\n[half]%(wd) %(nowhour):%(nowmin) %(ap) %(month)/%(day)/%(year) - %(season)"
+}
+
+Select.altalk
+{
+	AiTalk
+}
+
+OnLastTalk 
+{
+	"%(lastTalk)\e"
+}
+
+GetWeekDay
+{
+	if weekday == 0
+	{"Sun"}
+	elseif weekday == 1
+	{"Mon"}
+	elseif weekday == 2
+	{"Tue"}
+	elseif weekday == 3
+	{"Wed"}
+	elseif weekday == 4
+	{"Thu"}
+	elseif weekday == 5
+	{"Fri"}
+	else
+	{"Sat"}
+}
+
+GetAP
+{
+ 	if hour >= 0 && hour <= 11
+ 	{
+ 		"AM"
+ 	}
+ 	else
+ 	{
+ 		"PM"
+ 	}
+}
+
+Getnowmin
+{
+	if minute >= 0 && minute <=9
+	{
+		"0%(minute)"
+	}
+	else
+	{
+		"%(minute)"
+	}
+}
+
+Getnowhour
+{
+	if hour12 >= 0 && hour12 <=9
+	{
+		"12"
+	}
+	else
+	{
+		"%(hour12)"
+	}
+}
+
+season
+{
+	if month > 2 && month < 6
+	{
+		"Spring"
+	}
+	elseif month > 5 && month < 9
+	{
+		"Summer"
+	}
+	elseif month > 8 && month < 12
+	{
+		"Autumn"
+	}
+	else
+	{
+		"Winter"
+	}
+}
+
+Select.BACKTOMENU
+{
+	MenuRun
+}
+
+Select.configmenu
+{
+	TalkConfig
+}
+
+//--TalkConfig
+TalkConfig
+{
+	"\0\b[2]\_q\" 
+	--
+	"f[bold,1]Your birthday:\f[bold,0] %(birthdayprint) \f[sup,1](\q[Change it?,TEACHBDAY])\f[sup,0]\n"
+	--
+	"\f[bold,1]Talk Rate:\f[bold,0] - every %(talktime) \f[sup,1](\q[Change it,talkinter])\f[sup,0]\n\n"
+	--
+	{
+		"\![*]Would you like to be called Dokutah? (Currently: \q[%(calldokutah),ToggleDokutah])\n"
+	}
+	--
+	{
+		"\![*]Would you like to be reminded when the Arknights server resets? (Currently: \q[%(servernotify),ToggleServerNotify])\n"
+	}
+	--
+	if servernotify == "YES"
+	{
+		"\![*]Your reset time: %(UTC) \f[sup,1](\q[Change it?,TeachServerTime])\f[sup,0]\n"
+	}
+	--
+	{
+		"\![*]Notify when there's a new update? (Currently: \q[%(updatenotify),ToggleUpdateNotify])\n"
+	}
+	--
+	{
+		"\![*]Enable Uninstall? (Currently: \q[%(deleteshitai),ToggleUninstall])\n\n[half]"
+	}
+	--
+	"\![*]\q[Return,BACKTOMENU]\e"
+}
+
+//Uninstall toggle
+Select.ToggleUninstall
+{
+	if deleteshitai != "ON"
+	{
+		deleteshitai = "ON"
+	}
+	else
+	{
+		deleteshitai = "OFF"
+	}
+	--
+	TalkConfig
+}
+
+//Server notify toggle
+Select.ToggleServerNotify
+{
+	if servernotify != "YES"
+	{
+		if setservertime == "false"
+		{
+			ServerTimeTeach
+		}
+		else
+		{
+			servernotify = "YES"
+		}
+	}
+	else
+	{
+		servernotify = "NO"
+	}
+	--
+	TalkConfig
+}
+
+Select.TeachServerTime
+{
+	ServerTimeTeach
+}
+
+ServerTimeTeach
+{
+	if setservertime == "false"
+	{
+		"\0\s[0]In order for me to remind you when to claim your daily rewards in Arknights, I'll need to know what time the server resets for you. To do that, you can visit \_a[http://cicerakes.github.io/Game-Time-Master/]this website\_a and search for Arknights. Once you've finished, please enter your local reset time.\w8\w8\![open,timeinput,OnUTCInput,-1]\e"
+	}
+	else
+	{
+		"\0\s[0]Please visit \_a[http://cicerakes.github.io/Game-Time-Master/]this website\_a and search for Arknights. Once you've done that, please enter your local server reset time.\w8\w8\![open,timeinput,OnUTCInput,-1]\e"
+	}
+}
+
+OnUTCInput
+{
+	setservertime = "true"
+	servertime = reference0[0]
+	servernotify = "YES"
+	"\0\s[0]Understood. I'll remind you to claim your daily rewards on Arknights at %(UTC).\e"
+}
+
+UTC
+{
+	if servertime == 0
+	{"12:00 AM"}
+	elseif servertime == 1
+	{"1:00 AM"}
+	elseif servertime == 2
+	{"2:00 AM"}
+	elseif servertime == 3
+	{"3:00 AM"}
+	elseif servertime == 4
+	{"4:00 AM"}
+	elseif servertime == 5
+	{"5:00 AM"}
+	elseif servertime == 6
+	{"6:00 AM"}
+	elseif servertime == 7
+	{"7:00 AM"}
+	elseif servertime == 8
+	{"8:00 AM"}
+	elseif servertime == 9
+	{"9:00 AM"}
+	elseif servertime == 10
+	{"10:00 AM"}
+	elseif servertime == 11
+	{"11:00 AM"}
+	elseif servertime == 12
+	{"12:00 PM"}
+	elseif servertime == 13
+	{"1:00 PM"}
+	elseif servertime == 14
+	{"2:00 PM"}
+	elseif servertime == 15
+	{"3:00 PM"}
+	elseif servertime == 16
+	{"4:00 PM"}
+	elseif servertime == 17
+	{"5:00 PM"}
+	elseif servertime == 18
+	{"6:00 PM"}
+	elseif servertime == 19
+	{"7:00 PM"}
+	elseif servertime == 20
+	{"8:00 PM"}
+	elseif servertime == 21
+	{"9:00 PM"}
+	elseif servertime == 22
+	{"10:00 PM"}
+	else
+	{"11:00 PM"}
+}
+
+//Update notify toggle
+Select.ToggleUpdateNotify
+{
+	if updatenotify != "ON"
+	{
+		updatenotify = "ON"
+	}
+	else
+	{
+		updatenotify = "OFF"
+	}
+	--
+	TalkConfig
+}
+
+Select.ToggleDokutah
+{
+	if calldokutah != "YES"
+	{
+		calldokutah = "YES"
+	}
+	else
+	{
+		calldokutah = "NO"
+	}
+	--
+	TalkConfig
+}
+
+doctor
+{
+	if calldokutah == "YES"
+	{"Dokutah"}
+	else
+	{"Doctor"}
+}
+
+Select.TEACHBDAY
+{
+	dayslot = GetDaySlot
+	"\![open,dateinput,OnBDay,-1]\e"
+}
+
+OnBDay
+{
+	bornmonth = reference0[1]
+	bornday = reference0[2]
+	bornmonthprint = Printmonth
+	borndayprint = Printday
+	userbirthday = "%(bornmonth)month %(bornday)day"
+	birthdayprint = "%(bornmonthprint) %(borndayprint)"
+	"%(BDaycheck)\e"
+}
+
+Printmonth
+{
+	if bornmonth == 1
+	{
+		"January"
+	}
+	elseif bornmonth == 2
+	{
+		"February"
+	}
+	elseif bornmonth == 3
+	{
+		"March"
+	}
+	elseif bornmonth == 4
+	{
+		"April"
+	}
+	elseif bornmonth == 5
+	{
+		"May"
+	}
+	elseif bornmonth == 6
+	{
+		"June"
+	}
+	elseif bornmonth == 7
+	{
+		"July"
+	}
+	elseif bornmonth == 8
+	{
+		"August"
+	}
+	elseif bornmonth == 9
+	{
+		"September"
+	}
+	elseif bornmonth == 10
+	{
+		"October"
+	}
+	elseif bornmonth == 11
+	{
+		"November"
+	}
+	else
+	{
+		"December"
+	}
+}
+
+Printday
+{
+	if bornday == 1 || bornday == 21 || bornday == 31
+	{
+		"%(bornday)st"
+	}
+	elseif bornday == 2 || bornday == 22
+	{
+		"%(bornday)nd"
+	}
+	elseif bornday == 3 || bornday == 23
+	{
+		"%(bornday)rd"
+	}
+	else
+	{
+		"%(bornday)th"
+	}
+}	
+
+BDaycheck
+{
+	if userbirthday == dayslot
+	{
+		"\0\s[0]It's the user's birthday. \w8Happy birthday, %(username).\e"
+	}
+	elseif userbirthday == "12month 25day"
+	{
+		"\0\s[0]The user was born on Christmas. \w8Happy birthday, %(username).\e"
+	}
+	else
+	{
+		"\0\s[0]Your birthday is %(bornmonthprint) %(borndayprint). I'll remember.\e"
+	}
+}
+
+//--Talk Rate
+Select.talkinter
+{
+ 	"\0\s[0]\b2How often should I speak? \w8The interval is currently set to %(talktime)./
+ 	\0\n\n[half]/
+ 	\![*]\q[Every 30 seconds,TALKMAX]\n/
+	\![*]\q[Every minute,TALKHIGH]\n/
+ 	\![*]\q[Every 3 minutes,TALKNORMAL]\n/
+	\![*]\q[Every 5 minutes,TALKPOOR]\n/
+ 	\![*]\q[Don't speak,TALKNONE]\n\n[half]/
+	\![*]\q[Don't change,TalksTill]\e"
+}
+
+Select.TalksTill
+{
+	"\0\s[0]No change to the talk rate.\e"
+}
+
+Select.TALKMAX
+{
+ 	talktime = "30 seconds"
+	aitalkinterval = 30
+ 	"\0\s[0]I will speak every 30 seconds.\e"
+}
+
+//minute
+Select.TALKHIGH
+{
+ 	talktime = "minute"
+	aitalkinterval = 60
+ 	"\0\s[0]I will speak every minute.\e"
+}
+
+//3 minute
+Select.TALKNORMAL
+{
+ 	talktime = "3 minutes"
+	aitalkinterval = 240
+ 	"\0\s[0]I will speak every three minutes.\e"
+}
+
+//5 minute
+Select.TALKPOOR
+{
+ 	talktime = "5 minutes"
+	aitalkinterval = 300
+ 	"\0\s[0]I will speak every five minutes.\e"
+}
+
+//Silent
+Select.TALKNONE
+{
+ 	talktime = "...actually I won't talk at all"
+	aitalkinterval = 0
+	"\0\s[0]I will not speak.\e"
+}
+	
+Select.CANCEL
+{
+	"\0\s[0]Do your best, %(doctor).\e"
+	"\0\s[0]I believe in you, %(doctor).\e"
+	"\0\s[0]Don't overexert yourself, %(doctor).\e"
+	"\0\s[0]\_v[snd\amiya_12.wav]Got it.\e"
+	"\0\s[0]\_v[snd\amiya_13.wav]Understood.\e"
+}
+
+Select.dosomething
+{
+	"\0\s[0]\b2"
+	--
+ 	"\_v[snd\amiya_11.wav]Yes %(doctor)?"
+ 	"What should I do?"
+	"How can I be of assistance, %(doctor)?"
+	--
+	"\w8\n\n\_q"
+	--
+ 	"\![*]\q[Open Calendar,CALENDAR]\n/
+	\![*]\q[Check Email,MailCheck]\n/
+	\![*]\q[Open SSP Preferences,sspconfig]\n/
+	\![*]\q[Empty Recycle Bin,ChoiceGarbagecan]\n/
+	\![*]\q[Deploy Another Operator,OnGhostMenu]\n/
+	\![*]\q[System Information,ChoiceSystemInformation]\n\n/
+ 	\![*]\q[Return,BACKTOMENU]\e"
+}
+
+Select.CALENDAR
+{
+	"\0\s[0]Opening the calender.\![open,calendar]\e"
+}
+
+Select.sspconfig
+{
+	"\0\s[0]Opening the SSP config menu.\![open,configurationdialog]\e"
+}
+
+Select.ChoiceGarbagecan
+{
+	_gomicheck = FUNCTIONEX("gomi.dll", "-n")
+	
+	if _gomicheck == 0
+	{
+		"\0\s[0]I will empty the recycling bin.\w8\w8\s[-1]\w8\w8\w8\w8\w8\0\s[0]\cIt was empty.\e"
+	}
+	elseif _gomicheck >= 1
+	{
+		"\0\s[0]Emptying the recycle bin.\w8\w8\s[-1]\w8\w8\w8\w8\w8\![raise,OnGarbagecanEmpty]\w9\w9\w9\0\s[0]\cDone.\e"
+		
+		"\0\s[0]This is the second recycle bin emptying dialogue.\w8\w8\s[-1]\w8\w8\w8\w8\w8\![raise,OnGarbagecanEmpty]\w9\w9\w9\0\s[0]\cDone.\e"
+	}
+}
+
+OnGarbagecanEmpty
+{
+	_gomi = FUNCTIONEX("gomi.dll", "-f")
+}
+
+OnGhostMenu
+{
+	GhostsAvailable = IARRAY
+	_ghostlist = ""
+	installedcount = ARRAYSIZE(installedghostlist)
+	_i = 0
+	while _i < installedcount
+	{
+		if installedghostlist[_i] != "Caster Operator - Amiya"
+		{
+			GhostsAvailable ,= "%(installedghostlist[_i])"
+			_ghostlist += "\n\![*]\q[%(installedghostlist[_i]),callGhost]"
+		}
+		_i++
+	}
+	--
+	"\0\![set,autoscroll,disable]Who shall I deploy?\n\_q"
+	--
+	"%(_ghostlist)"
+	--
+	if (installedcount - ghostexcount) > 3
+	{
+		"\n\![*]\q[Deploy a random Operator,callGhostRand]"
+	}
+	--
+	"\n\n\![*]\q[Nevermind,BACKTOMENU]"
+}
+
+OnGhostCallCheck
+{
+	if reference0 !_in_ ghostexlist
+	{
+		"\0\s[0]%(confirm)Got it, I'll deploy %(GhostToCall)."
+		--
+		"\w8\w8\![call,ghost,%(GhostToCall)]\e"
+	}
+	else
+	{
+		"\0\s[0]%(GhostToCall) is already deployed, %(doctor).\e"
+	}
+}
+
+Select.callGhostRand
+{
+	GhostRand = RAND(GhostsAvailCount)
+	GhostToCall = GhostsAvailable[GhostRand]
+  
+	"\![get,property,OnRandCallCheck,ghostlist(%(GhostToCall)).sakuraname]"
+}
+
+OnRandCallCheck
+{
+	if reference0 !_in_ ghostexlist
+	{
+		"\0\s[0]%(confirm)Understood. I'll deploy a random Operator."
+		--
+		"\w8\w8\![call,ghost,%(GhostToCall)]\e"
+		callingGhost = 1
+	}
+	else
+	{
+		GhostsAvailable[GhostRand] = IARRAY
+		GhostsAvailCount = ARRAYSIZE(GhostsAvailable)
+		GhostRand = RAND(GhostsAvailCount)
+		GhostToCall = GhostsAvailable[GhostRand]
+		if GhostsAvailable[GhostRand] == ""
+		{
+			"\0\s[0]I'm sorry %(doctor). I couldn't connect to the neural network of Rhodes Island.\e"
+		}
+		else
+		{
+			"\![get,property,OnRandCallCheck,ghostlist(%(GhostToCall)).sakuraname]"
+		}
+	}
+}
+
+OnChoiceSelectEx
+{
+	if reference1 == "callGhost"
+	{
+		GhostToCall = reference0
+		"\![get,property,OnGhostCallCheck,ghostlist(%(reference0)).sakuraname]"
+	}
+}
+
+Select.ChoiceSystemInformation
+{
+	os_name = FUNCTIONEX("saori_cpuid.dll","os.name")
+	os_version = FUNCTIONEX("saori_cpuid.dll","os.version")
+	cpu_name = FUNCTIONEX("saori_cpuid.dll","cpu.name")
+	cpu_clockex = FUNCTIONEX("saori_cpuid.dll","cpu.clockex")
+	"/
+	\0\s[0]\b[2]/
+	\_q\f[bold,1]OS:\f[bold,0] %(os_name) %(os_version)\n/
+	\f[bold,1]Memory Load:\f[bold,0] %(memoryload)%\n/
+	\f[bold,1]Physical Memory:\f[bold,0] %(memoryavailphys) KB\n/
+	\f[bold,1]CPU:\f[bold,0] %(cpu_name) %(cpu_clockex)MHz\n/
+	\f[bold,1]Ukagaka:\f[bold,0] %property[baseware.version]/
+	\e"
+}
+	
+Select.MailCheck
+{
+	"\![biff]\e"
+}
+
+Select.HEADLINECANCEL
+{
+ 	"\0\s[0]Finished with headlines.\e"
+}
+
+	
+//---- OnChoiceTimeout ---------------------------------------------------------
+OnChoiceTimeout
+{
+	"\0\s[0]%(doctor)...?\e"
+	"\0\s[0]Are you there, %(doctor)...?\e"
+}
+
+Select.bugreport
+{
+	"\0\s[0]This is the bug report dialogue. \w5Report bugs to youremailaddress@emailprovider.com. \w5I was downloaded from \_a[http://www.whereveryoupostedthem.com/]some place\_a.\e"
+}
+
+Select.updatecheck
+{
+	if debug == 1
+	{
+		"\0\s[0]Ah, be careful %(doctor). You wouldn't want to lose your progress, would you?\e"
+	}
+	else
+	{
+		"\0\s[0]\![updatebymyself]\e"
+	}
+}
+
+//--Test Variable --------------------------------------------------------
+Select.testvariable
+{
+	"\0\s[0]%(doctor)...?\x\cI'm so happy... %(doctor)...\n\n[half]/
+	\![*]\q[Who... are you?,whoareyou]\e"
+}

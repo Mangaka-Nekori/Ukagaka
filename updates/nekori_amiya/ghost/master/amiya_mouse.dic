@@ -1,0 +1,161 @@
+﻿//---------------------------Mouse Functions--------------------------
+
+//--OnMouseMove
+OnMouseMove
+{
+  	if nowmode != "BOOTING"
+ 	{
+		if reference3 == 0
+		{
+			MouseMoveSakura
+		}
+	}
+}
+
+//--MouseMoveSakura
+MouseMoveSakura
+{
+	if reference4 != ""
+ 	{
+ 		stroke++
+ 		if stroke >= 40
+		{
+ 			stroke = 0
+			if reference4 == "Head"
+ 			{
+				"\0\s[0]%(giggle)Ehehe~"
+				"\0\s[0]What are you doing, %(doctor)?"
+				"\0\s[0]Is my hair soft...?"
+				"\0\s[0]Make sure you're still getting work done, %(doctor)."
+			}
+			elseif reference4 == "Ears"
+			{
+				"\0\s[0]They're rabbit ears..."
+				"\0\s[0]What are you doing, %(doctor)?"
+			}
+ 			elseif reference4 == "Face"
+ 			{
+ 				"\0\s[0]This is petting dialogue for my face."
+ 				"\0\s[0]This is more petting dialogue for my face."
+ 				"\0\s[0]This is another bit of petting dialogue for my face. Well, stroking would probably be more accurate."
+ 			}
+			elseif reference4 == "Hand"
+			{
+				"\0\s[0]\_v[snd\amiya_18.wav]Ehehe~ \w4%(doctor)..."
+				"\0\s[0]%(giggle)Ehehe~"
+			}
+			elseif reference4 == "Ponytail"
+			{
+				"\0\s[0]\_v[snd\amiya_18.wav]Ehehe~ \w4%(doctor)..."
+				"\0\s[0]%(giggle)Ehehe~"
+			}
+			elseif reference4 == "Bust"
+			{
+				"\0\s[0]\_v[snd\amiya_15.wav]Huh!? %(doctor)!?"
+			}
+			--
+			"\e"
+ 		}
+	}
+ 	else
+	{
+		stroke = 0
+ 	}
+}
+
+//---- OnMouseDoubleClick -------------------------------------------------------
+OnMouseDoubleClick
+{
+	if nowmode != "BOOTING"
+	{
+		if reference3 == 0
+		{
+			MouseDoubleClickSakura
+		}
+	}
+}
+
+ //---- MouseDoubleClickSakura ----------------------------------------------------------
+MouseDoubleClickSakura
+{
+ 	if reference4 == "Head" || reference4 == "Face" || reference4 == "Nose"
+	{
+		"\0\s[0]This is the hitting dialogue.\e"
+		"\0\s[0]This is another hitting dialogue.\e"
+		"\0\s[0]This is yet another bit of text for hitting.\e"
+		"\0\s[0]This is the fourth hitting dialogue.\e"
+ 	}
+	elseif reference4 == "Bust"
+	{
+		"\0\s[0]\_v[snd\amiya_15.wav]Huh!? %(doctor)!?\e"
+	}
+	else
+ 	{
+ 		OpenSakuraMenu
+	}
+}
+
+OnMouseWheel
+{
+	if nowmode != "BOOTING"
+	{
+		if reference3 == 0
+		{
+			MouseWheelSakura
+		}
+	}
+}
+
+MouseWheelSakura
+{
+	if reference4 != ""
+ 	{
+		scroll++
+		if scroll > 20
+		{
+			scroll = 0
+			if reference4 == "Ears" || reference4 == "Ponytail"
+			{
+				"\0\s[0]\_v[snd\amiya_15.wav]Ow!! %(doctor)!?\e"
+			}
+		}
+	}
+	else
+	{
+		scroll = 0
+	}
+}
+
+OnMouseLeave
+{
+  scroll = 0
+}
+
+OnMouseDown
+{
+	if nowmode != "BOOTING"
+	{
+		if reference5 == 0
+		{
+			if reference4 == "Hand"
+			{
+				"\0\s[0]\_v[snd\amiya_18.wav]Ehehe~ \w4%(doctor)...\e"
+				"\0\s[0]%(giggle)Ehehe~\e"
+			}
+			elseif reference4 == "Nose"
+			{
+				"\0\s[0]Eek, %(doctor), did you need something?\e"
+				"\0\s[0]Eek, %(doctor), what was that?\e"
+				"\0\s[0]%(doctor), if you need something just ask me.\e"
+			}
+			elseif reference4 == "Bust"
+			{
+				"\0\s[0]\_v[snd\amiya_15.wav]Huh!? %(doctor)!?\e"
+			}
+		}
+	}
+}
+
+ //*********************Advanced User Info*******************************
+ //There are other mouse related functions you could set up much like the above, such as OnMouseDragStart, OnMouseDragEnd, OnMouseWheel, and others which correspond to various things you can do with your mouse. You can probably guess what those functions do just by their names - OnMouseWheel would be if someone spun their mouse wheel over a certain area, for example. If you're interested in these, I'd recommend doing some reading at the CROW-SSP Encyclopedia to get a better idea of them and settle down for some trial and error learning as you try to put them in.
+ //***********************************************************************
