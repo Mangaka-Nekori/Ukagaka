@@ -294,7 +294,6 @@ OnBIFFFailure
 
 OnUpdateCheckComplete
 {
-	reference[0] += 1 //Fixes file number glitch
 	if reference0 != "none" //reference0 here will say 'none' if there are no new files, and will be a number if there are new files. So if reference0 is anything other than 'none', tell the user there's an update
 	{
 		updateavailable = 1
@@ -313,9 +312,7 @@ OnUpdateBegin
 {
 	updateavailable = 0
 	--
-	"\0\s[0]Starting the update process.\w8\e"
-	
-	"\0\s[0]Another message for starting the update process. \w8Hope you read the directions properly.\w8\e"
+	"\0\s[0]Connecting to the Rhodes Island neural network. Just a moment, please.\w8\e"
 }
 
  //---- OnUpdateReady ---------------------------------------------------------
@@ -323,27 +320,23 @@ OnUpdateBegin
  
 OnUpdateReady
 {
-	"\0\s[0]There are %(reference[0]) new files.\w8\e"
-	
-	//reference0 here storing the number of new files. You don't have to use it if you don't want to.
+	reference[0] += 1
+	"\0\s[0]%(docsnd)%(doctor), there are %(reference[0]) new files from the Rhodes Island neural network.\w8\e"
 }
 
 
 //---- OnUpdateComplete -------------------------------------------------------------
-//When the ghost has finished the update process.
-
 OnUpdateComplete
 {
 	updateavailable = 0
-	if reference0 == "none" //if the ghost had nothing to update with
+	if reference0 == "none"
  	{
- 		"\0\s[0]There are no new files.\e"
-		
-		"\0\s[0]This is another message about there being no new files to update with.\e"
+ 		"\0\s[0]I'm sorry, %(doctor). There are no new files.\e"
+		"\0\s[0]There seems to be no new files from the Rhodes Island neural network.\e"
 	}
- 	else //if the ghost has updated successfully
+ 	else
 	{
-		"\0\s[0]Update successful!\e"
+		"\0\s[0]Update installed successfully.\e"
  	}
 }
 
@@ -354,11 +347,11 @@ OnUpdateFailure
 {
 	if reference0 == "timeout" //if the connection times out
  	{
- 		"\0\s[0]The update connection has timed out.\e"
+ 		"\0\s[0]I'm sorry, %(doctor). The network connection has timed out.\e"
 	}
  	elseif reference0 == "md5 miss" //This is if the files don't match properly to updates.dau, I think. For example, if a file only partially transferred or somehow got corrupted. This may also come up if you didn't set up the directory and updates.dau properly as outlined on the walkthrough page.
 	{
-		"\0\s[0]The MD5 hash of the files don't match.\e"
+		"\0\s[0]The MD5 value doesn't match.\e"
  	}
 	else //for other errors
  	{
@@ -373,15 +366,17 @@ OnUpdateFailure
  
 OnUpdate.OnDownloadBegin
 {
- 	if "aitalk" _in_ reference0 //this is checking to see what kind of files are being downloaded. In this case, it's looking for files called aitalk in the download queue. If you want to have a specialized bit of dialogue for each type of file, you can expand this with elseifs and by replacing aitalk with whatever file you have in mind. Keep in mind my warning above though.
+ 	if "aitalk" _in_ reference0
  	{
- 		"\0\s[0]I am going to download more dialogue. \w8It's in the aitalk file.\e"
+ 		"\0\s[0]It looks like I have new things to say to you.\e"
  	}
- 	else //for files not specified above
+	elseif "menu" _in_ reference0
+	{
+		"\0\s[0]There appears to be an update to my menu.\e"
+	}
+ 	else
  	{
-		"\0\s[0]This is dialogue for finding a new file.\e"
-		
-		"\0\s[0]This is another bit of dialogue for finding a new file.\e"
+		"\0\s[0]...\e"
 	}
 }
 
@@ -390,7 +385,7 @@ OnUpdate.OnDownloadBegin
  
 OnUpdate.OnMD5CompareBegin
 {
-	"\0\s[0]Checking the MD5 value.\e"
+	"\0\s[0]...\e"
 }
 
  //---- OnUpdate.OnMD5CompareComplete --------------------------------------------------
@@ -398,7 +393,7 @@ OnUpdate.OnMD5CompareBegin
  
 OnUpdate.OnMD5CompareComplete
 {
-	"\0\s[0]MD5 check good.\e"
+	"\0\s[0]....\e"
 }
 
  //---- OnUpdate.OnMD5CompareFailure ---------------------------------------------------
@@ -406,7 +401,7 @@ OnUpdate.OnMD5CompareComplete
  
 OnUpdate.OnMD5CompareFailure
 {
-	"\0\s[0]The MD5 values don't match.\w8\e"
+	"\0\s[0]%(doctor), your attention is required. The MD5 values don't match.\e"
 }
 
  
@@ -513,7 +508,7 @@ OnHeadlinesenseFailure
  
 OnUpdatedataCreating
 {
-	"\0\s[0]Creating the updates2.dau file.\e"
+	"\0\s[0]Creating the update file.\e"
 }
 
  //---- OnUpdatedataCreated -------------------------------------------------------------
@@ -521,7 +516,7 @@ OnUpdatedataCreating
  
 OnUpdatedataCreated
 {
-	"\0\s[0]Successfully created updates2.dau.\e"
+	"\0\s[0]%(docsnd)%(doctor), the update file was sucessfully created.\e"
 }
 
  //---- OnNarCreating ------------------------------------------------------------------
@@ -727,7 +722,7 @@ OnShellScaling
 
 OnOtherGhostClosed
 {
-	"\0\s[0]Good work, %(reference0)!\e"
+	"\0\s[0]Good work, %(reference0).\e"
 	"\0\s[0]Thank you for your time, %(reference0).\e"
 }
 
