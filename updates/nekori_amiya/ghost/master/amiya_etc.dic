@@ -686,7 +686,7 @@ OnApplicationFileOpen
  
 OnBatteryLow
 {
-	"\0\s[1=0]The laptop's battery is low. \w8There is %(reference0) power left.\e"
+	"\0\s[0]%(docsnd)%(doctor), the battery is low. There is %(reference0) power left.\e"
 	//reference0 here is the amount of battery power. Replace as you like.
 }
  
@@ -695,7 +695,7 @@ OnBatteryLow
  
 OnBatteryCritical
 {
-	"\0\s[0]The laptop's battery is critically low.\e"
+	"\0\s[0]%(docsnd)%(doctor), your attention is required. The battery is critically low.\e"
 }
  
 //--OnBatteryNotify--------------------------------------------------------------------
