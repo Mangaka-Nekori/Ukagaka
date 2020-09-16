@@ -343,7 +343,7 @@ OnChangelog
 
 Select.YesChangelog
 {
-	"\0\s[0]_q/Oh my god does this work please tell me this works I really really want this to work oh god does it work.\e"
+	"\0\s[0]\_qOh my god does this work please tell me this works I really really want this to work oh god does it work.\e"
 }
 
 Select.NoChangelog
@@ -508,7 +508,7 @@ OnHeadlinesenseFailure
  
 OnUpdatedataCreating
 {
-	"\0\s[0]Creating the update file.\e"
+	"\0\s[0]Creating the update file. Just a moment.\e"
 }
 
  //---- OnUpdatedataCreated -------------------------------------------------------------
@@ -689,13 +689,10 @@ OnBatteryNotify
 }
 */
 
-
- //---- OnSysResourceLow -----------------------------------------------------------
- //A notification for if your system resources are low. I've never seen this happen and my system resources can run pretty low sometimes (woo windows xp woooo), so I suspect this one also may not work without the right plug-in, but I could be wrong. You might as well fill it out.
- 
+//---- OnSysResourceLow -----------------------------------------------------------
 OnSysResourceLow
 {
-	"\0\s[0]The system resources are low.\e"
+	"\0\s[0]%(docsnd)%(doctor), your attention is required. The system resources are low.\e"
 }
 
 //--OnShellScaling
@@ -719,32 +716,4 @@ OnOtherGhostClosed
 {
 	"\0\s[0]Good work, %(reference0).\e"
 	"\0\s[0]Thank you for your time, %(reference0).\e"
-}
-
-docsnd
-{
-   "\_v[snd\doctor1.wav]"
-   "\_v[snd\doctor2.wav]"
-   "\_v[snd\doctor3.wav]"
-   "\_v[snd\doctor4.wav]"
-   "\_v[snd\doctor5.wav]"
-   "\_v[snd\doctor6.wav]"
-   "\_v[snd\doctor7.wav]"
-   "\_v[snd\doctor8.wav]"
-   "\_v[snd\doctor9.wav]"
-}
-
-giggle
-{
-	"\_v[snd\amiya_16.wav]"
-	"\_v[snd\amiya_17.wav]"
-}
-
-confirm
-{
-	"\_v[snd\amiya_11.wav]"
-	"\_v[snd\amiya_12.wav]"
-	"\_v[snd\amiya_13.wav]"
-	"\_v[snd\amiya_19.wav]"
-	"\_v[snd\amiya_20.wav]"
 }
