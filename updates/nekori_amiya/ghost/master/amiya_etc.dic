@@ -322,7 +322,7 @@ OnUpdateReady
 {
 	reference[0] += 1
 	_isare = ""; if reference[0] == 1; {_isare = "is"}; else; {_isare = "are"}
-	_file = ""; if reference[0] == 1; {_isare = "file"}; else; {_file = "files"}
+	_file = ""; if reference[0] == 1; {_file = "file"}; else; {_file = "files"}
 	--
 	"\0\s[0]%(docsnd)%(doctor), there %(_isare) %(reference[0]) new %(_file) from the Rhodes Island neural network.\w8\e"
 }
@@ -341,7 +341,7 @@ OnUpdateComplete
 	{
 		askedalready = 0
 		--
-		OnChangeLog
+		"\![raise,OnChangelog]"
 		//"\![raise,OnChangelog]"
  	}
 }
