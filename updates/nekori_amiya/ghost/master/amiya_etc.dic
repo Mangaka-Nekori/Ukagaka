@@ -375,7 +375,7 @@ OnUpdateFailure
 	}
  	elseif reference0 == "md5 miss" //This is if the files don't match properly to updates.dau, I think. For example, if a file only partially transferred or somehow got corrupted. This may also come up if you didn't set up the directory and updates.dau properly as outlined on the walkthrough page.
 	{
-		"\0\s[0]The MD5 value doesn't match.\e"
+		"\0\s[0]%(docsnd)%(doctor), your attention is required. The MD5 values don't match. I suggest contacting the developer.\e"
  	}
 	else //for other errors
  	{
@@ -425,7 +425,7 @@ OnUpdate.OnMD5CompareComplete
  
 OnUpdate.OnMD5CompareFailure
 {
-	"\0\s[0]%(doctor), your attention is required. The MD5 values don't match.\e"
+	"\0\s[0]...\e"
 }
 
  
