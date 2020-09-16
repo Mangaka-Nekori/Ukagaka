@@ -336,14 +336,17 @@ OnUpdateComplete
 OnChangelog
 {
 	version = "0.0.1 Beta"
-	"\0\s[0]Update installed successfully. Would you like to read the changelog from the Rhodes Island headquarters?\w8\w8/
+	"\0\s[0]Update installed successfully. Would you like to read the changelog from the Rhodes Island headquarters?\n\n[half]\w8\w8/
 	\![*]\q[Yes,YesChangelog]\n/
 	\![*]\q[No,NoChangelog]\e"
 }
 
 Select.YesChangelog
 {
-	"\0\s[0]\_qOh my god does this work please tell me this works I really really want this to work oh god does it work.\e"
+	"\![set,autoscroll,disable]\_q\b2/
+	\_l[84]--Version 0.0.1--\n\n/
+	-Welcome to the first version of Amiya beta! There's not much to put here really, this is just so I can put change logs in here later. Be sure to tell me if there are any issues. Enjoy Amiya!\n/
+	\n[half]\![*]\q[Done,canceldialogue]\e"
 }
 
 Select.NoChangelog
