@@ -379,7 +379,7 @@ OnUpdateFailure
  	}
 	else //for other errors
  	{
- 		"\0\s[0]The update could not be completed. \w8The error is '%(reference0)'.\e"
+ 		"\0\s[0]The update could not be completed. The error is '%(reference0)'.\e"
 	}
 }
 
@@ -571,8 +571,7 @@ OnNarCreated
  
 OnSNTPBegin
 {
-	"\0\s[0]I'm going to check the time. \w9I will connect to %(reference0).\e"
-	//%(reference0) here is the site they'll be using to check your clock. I wouldn't worry too much about what the site is or where it's defined, it should be accurate. Replace the dialogue with what you need, you don't have to use reference0 if you don't want to.
+	"\0\s[0]I'm going to connect to the Rhodes Island neural network to make sure your system time is correct. The department is %(reference0).\e"
 }
 
 
@@ -581,29 +580,27 @@ OnSNTPBegin
  
 OnSNTPCompare
 {
- 	"Retrieved Time: %reference1[1]/%reference1[2]/%reference1[0] %reference1[3]:%reference1[4]:%reference1[5]\w2\n/
+ 	"\_qRetrieved Time: %reference1[1]/%reference1[2]/%reference1[0] %reference1[3]:%reference1[4]:%reference1[5]\w2\n/
 	Your Time: %reference2[1]/%reference2[2]/%reference2[0] %reference2[3]:%reference2[4]:%reference2[5]\w2\n/
  	\n"
 	--
  	if reference3 == 0 //if your clock is already accurate.
 	{
- 		"\0\s[0]Your clock is accurate.\e" //replace this with whatever message you like.
+ 		"\0\s[0]Your system clock is accurate.\e" //replace this with whatever message you like.
 	}
  	else //if your clock doesn't match
 	{
 	//you can redo this top line up to the \n\n[half] part, but leave the \q options alone.
- 		"\0\s[0]Your clock doesn't match.\w6\nShould I fix it?\n\n[half]/
-		\![*]\q[Fix it,OnSNTPEXECUTE]\n/
- 		\![*]\q[Leave it alone,OnSNTPCANCEL]\e"
+ 		"\0\s[0]Your clock doesn't match the Rhodes Island neural network. \nShould I sync it?\n\n[half]/
+		\![*]\q[Sync,OnSNTPEXECUTE]\n/
+ 		\![*]\q[Leave it as is,OnSNTPCANCEL]\e"
 	}
 }
 
- //----　OnSNTPEXECUTE ------------------------------------------------------------------
- ////After they've fixed your clock. Note the \6 tag - that's what actually changes the clock. Do not remove that tag. Replace the rest with what you want.
- 
+//----　OnSNTPEXECUTE ------------------------------------------------------------------
 OnSNTPEXECUTE
 {
-	"\0\s[0]The clock has been fixed.\6\e"
+	"\0\s[0]I've synced the clock with Rhodes Island's.\6\e"
 }
 
  //----　OnSNTPCANCEL ------------------------------------------------------------------
@@ -611,7 +608,7 @@ OnSNTPEXECUTE
  
 OnSNTPCANCEL
 {
-	"\0\s[0]The user decided not to change the clock.\e"
+	"\0\s[0]%(confirm)Understood.\e"
 }
 
  //----　OnSNTPFailure ------------------------------------------------------------------
@@ -619,7 +616,7 @@ OnSNTPCANCEL
  
 OnSNTPFailure
 {
-	"\0\s[0]The clock wasn't changed. \w8Something went wrong.\e"
+	"\0\s[0]Sorry %(doctor). There was an error, so the clock wasn't synced.\e"
 }
 
 
