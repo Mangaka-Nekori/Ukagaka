@@ -275,26 +275,18 @@ OnBIFFFailure
 	elseif reference0 == "defect" //If the information put into the POP menu is wrong.
  	{
  		"\0\s[0]The email account was not set up properly. \w8It can be reset at the POP menu.\![open,configurationdialog]\e"
-		
-		//Note that this ends with \![open,configurationdialog]. This will open up the preferences menu I described above automatically. More on \! functions in the walkthrough. You can delete the \! tag here if you want to.
 	}
- 	else //if there's some other kind of error.
+ 	else
 	{
 		"\0\s[0]I can't connect to the account. \w8The error returned is '%(reference[0])'.\e"
-		
-		//reference0 here stores the error message the email server would have given the ghost, hopefully.
  	}
 }
 
 
- //**** Network Update *****************************************************************
- //The following functions are for the Network Update of your ghost, where it will connect to your website, check for new files, and update itself. This is a handy feature, but tricky to set up. If you have no intention of using Network Update, you can disregard these, but it won't hurt to fill them out anyway just in case. More details about how to set up Network Update are in the walkthrough (http://www.ashido.com/ukagaka/walkthrough.html).
- 
- //Replace the dialogue in the next set of functions as appropriate. You can easily test these messages using the Developer panel. Go to Open at the bottom of it and choose one of the four Update Event options to simulate a Ghost's update process. I highly recommend doing this at LEAST once if you're going to use this feature to make sure it flows well.
-
+//**** Network Update *****************************************************************
 OnUpdateCheckComplete
 {
-	if reference0 != "none" //reference0 here will say 'none' if there are no new files, and will be a number if there are new files. So if reference0 is anything other than 'none', tell the user there's an update
+	if reference0 != "none"
 	{
 		updateavailable = 1
 	}
@@ -305,9 +297,7 @@ OnUpdateCheckComplete
 	
 }
  
- //---- OnUpdateBegin -------------------------------------------------------------
- //When you first tell your ghost to update. An introductory statement, like OnBIFFBegin above. Replace or add more dialogue as appropriate. Note that they end with \w8 to give a little breather time.
- 
+//---- OnUpdateBegin -------------------------------------------------------------
 OnUpdateBegin
 {
 	updateavailable = 0
@@ -315,9 +305,7 @@ OnUpdateBegin
 	"\0\s[0]Connecting to the Rhodes Island neural network. Just a moment, please.\w8\e"
 }
 
- //---- OnUpdateReady ---------------------------------------------------------
- //If the ghost finds new files to update with.
- 
+//---- OnUpdateReady ---------------------------------------------------------
 OnUpdateReady
 {
 	reference[0] += 1
@@ -342,7 +330,6 @@ OnUpdateComplete
 		askedalready = 0
 		--
 		"\![raise,OnChangelog]"
-		//"\![raise,OnChangelog]"
  	}
 }
 
@@ -364,30 +351,25 @@ Select.NoChangelog
 	"\0\s[0]%(confirm)Understood.\e"
 }
 
- //---- OnUpdateFailure -------------------------------------------------------------
- //Error messages if the update process fails in some way.
- 
+//---- OnUpdateFailure -------------------------------------------------------------
 OnUpdateFailure
 {
-	if reference0 == "timeout" //if the connection times out
+	if reference0 == "timeout"
  	{
  		"\0\s[0]I'm sorry, %(doctor). The network connection has timed out.\e"
 	}
- 	elseif reference0 == "md5 miss" //This is if the files don't match properly to updates.dau, I think. For example, if a file only partially transferred or somehow got corrupted. This may also come up if you didn't set up the directory and updates.dau properly as outlined on the walkthrough page.
+ 	elseif reference0 == "md5 miss"
 	{
 		"\0\s[0]%(docsnd)%(doctor), your attention is required. The MD5 values don't match. I suggest contacting the developer.\e"
  	}
-	else //for other errors
+	else
  	{
- 		"\0\s[0]The update could not be completed. The error is '%(reference0)'.\e"
+ 		"\0\s[0]%(docsnd)%(doctor), your attention is required. The update could not be completed. The error is '%(reference0)'.\e"
 	}
 }
 
 
- //---- OnUpdate.OnDownloadBegin ------------------------------------------------
- //This dialogue plays when they begin downloading a new file. WARNING: if you have big plans for your ghost and are going to make a lot of new image files for it (like... i do, cough) at some point, you're going to want to make these messages very brief, if you even have them at all. The reason is because the user will see these messages for EVERY individual file that they have to download, and if you have, say, 50 pna files in the queue, they will see this dialogue 50 times. Not only that, but displaying the dialogue takes some time, so it also extends the download process.
- //If you aren't planning on adding a ton of files at any point, or are only intending to update the .dic files which will be at most a handful of files, then you can go ahead and put a short message in here. But if your ghost is going to grow in leaps and bounds as you work on it, try and keep these messages as brief as possible to make the process that much faster for your user.
- 
+//---- OnUpdate.OnDownloadBegin ------------------------------------------------
 OnUpdate.OnDownloadBegin
 {
  	if "aitalk" _in_ reference0
@@ -404,25 +386,19 @@ OnUpdate.OnDownloadBegin
 	}
 }
 
- //---- OnUpdate.OnMD5CompareBegin ---------------------------------------------------
- //This checks the hash value of the files in the directory and the files listed in updates.dau, I believe. It will do this for every file the user downloads, so I again remind you of my warning above! For every file they download, they will have to go through three sets of unique dialogue, and it can get old fast. Not to mention it slows things down a lot. Again, I would recommend keeping this very brief, if not just replacing it with "..." instead.
- 
+//---- OnUpdate.OnMD5CompareBegin ---------------------------------------------------
 OnUpdate.OnMD5CompareBegin
 {
 	"\0\s[0]...\e"
 }
 
- //---- OnUpdate.OnMD5CompareComplete --------------------------------------------------
- //After they've checked the MD5 value and it matches. See above about the length of this message.
- 
+//---- OnUpdate.OnMD5CompareComplete --------------------------------------------------
 OnUpdate.OnMD5CompareComplete
 {
-	"\0\s[0]....\e"
+	"\0\s[0]...\e"
 }
 
- //---- OnUpdate.OnMD5CompareFailure ---------------------------------------------------
- //If the MD5 values don't match. If you follow my Network Update directions carefully, this shouldn't come up very often, but don't be surprised if you run into it every now and then by forgetting a file here or there.
- 
+//---- OnUpdate.OnMD5CompareFailure ---------------------------------------------------
 OnUpdate.OnMD5CompareFailure
 {
 	"\0\s[0]...\e"

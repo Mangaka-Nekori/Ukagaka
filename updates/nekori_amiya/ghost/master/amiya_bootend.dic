@@ -155,16 +155,14 @@ normalboottalk
 		elseif timeslot == "morning"
 		{
 			"\0\s[0]Good morning, %(doctor). We have work to do.\e"
-			"\0\s[0]This is another morning boot dialogue\e"
 		}
 		elseif timeslot == "lunch"
 		{
-			"\0\s[0]This is a lunch boot dialogue.\e"
-			"\0\s[0]This is another lunch boot dialogue.\e"
+			"\0\s[0]Hello %(doctor). Have you eaten yet?\e"
 		}
 		elseif timeslot == "afternoon"
 		{
-			"\0\s[0]This is an afternoon boot dialogue.\e"
+			"\0\s[0]Good afternoon, %(doctor). Have you done any runs today?\e"
 		}
 		elseif timeslot == "evening"
 		{
@@ -303,7 +301,6 @@ OnGhostChanged
 	--
 	"\e"
 }
-
 
 //--OnShellChanging
 OnShellChanging
