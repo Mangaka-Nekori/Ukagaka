@@ -321,16 +321,8 @@ OnUpdateBegin
 OnUpdateReady
 {
 	reference[0] += 1
-	if reference[0] == 1
-	{
-		%(_isare) = "is"
-		%(_file) = "file"
-	}
-	else
-	{
-		%(_isare) = "are"
-		%(_file) = "files"
-	}
+	_isare = ""; if reference[0] == 1; {_isare = "is"}; else; {_isare = "are"}
+	_file = ""; if reference[0] == 1; {_isare = "file"}; else; {_file = "files"}
 	--
 	"\0\s[0]%(docsnd)%(doctor), there %(_isare) %(reference[0]) new %(_file) from the Rhodes Island neural network.\w8\e"
 }
@@ -354,7 +346,7 @@ OnUpdateComplete
  	}
 }
 
-OnUpdateVars
+OnChangelog
 {
 	version = "0.0.1 Beta"
 	"\0\s[0]Update installed successfully. Would you like to read the changelog from the Rhodes Island headquarters?\w8\w8/
@@ -733,20 +725,18 @@ OnSysResourceLow
 	"\0\s[0]The system resources are low.\e"
 }
 
- //--OnShellScaling
- //This is a function however that you may actually use! Or at least, I often use it when desktop space is at a premium (which it always is on my computer). If you right click the ghost, you can go to Shell Scaling, which lists a number of different percentages. Those are the percentages your ghost can be scaled in size up or down. You can try them out yourself to get an idea of what I mean. I often scale mine down to get them out of the way sometimes. This adds dialogue whenever you change their scale. You don't have to do this if you don't want to, in which case they will just stay silent when you size them up or down. If that's what you want, just delete the whole thing.
- 
+//--OnShellScaling
 OnShellScaling
 {
-	if reference0 >= 150 //this number is the percentage that you're scaling the ghost up to. In this case, it's 150%.
+	if reference0 >= 150
 	{
 		"\0\s[0]I'm now 150% my original size.\e"
 	}
-	elseif reference0 == 100 //this is 100%
+	elseif reference0 == 100
 	{
 		"\0\s[0]I'm normal sized.\e"
 	}
-	elseif reference0 == 50 //this is 50%. You can add any percentage that's listed under shell scaling if you want using more elseifs.
+	elseif reference0 == 50
 	{
 		"\0\s[0]I'm now 50% my original size.\e"
 	}
