@@ -38,6 +38,8 @@ RandomTalk : nonoverlap
 	"\0\s[0]I admire your work, but make sure you're caring for yourself, %(doctor).\e"
 	"\0\s[0]%(doctor)... I've recently been thinking about picking up the violin again... \nMaybe I can play something for you someday?\e"
 	"\0\s[0]%(doctor), make sure you're attending to your needs every oncce in a while. It doesn't help anyone if you don't take care of yourself.\e"
+	"\0\s[0]%(doctor), if you ever feel stuck while working, try taking a step back and coming back later with a set of fresh eyes. You'll be surprised at how differently you'll see things after some time away from them.\e"
+	"\0\s[0]%(doctor), have you done any Tactical Drills today?\e"
 	/*
 	//You can use the \w tag to time your dialogue. \w goes from 1-9, although I usually leave it at 8 to be safe, and while you can't go above 9, you can layer \w tags to add up to higher numbers. Here, \w8 and \w6 combine to make 14.
 	
@@ -97,6 +99,34 @@ RandomTalk : nonoverlap
 		"\0\s[0]Um... %(doctor)... \nIs it really necessary for me to wear this?\e"
 	}
 	
+	if weekday == 0
+	{
+		"\0\s[0]%(docsnd)%(doctor), it's Sunday. Don't forget that Aerial Threat, Resource Search, Tough Siege, and Cargo Escort operations are open today.\e"
+	}
+	if weekday == 1
+	{
+		"\0\s[0]%(docsnd)%(doctor), it's Monday. Don't forget that Resource Search and Tough Siege operations are open today.\e"
+	}
+	if weekday == 2
+	{
+		"\0\s[0]%(docsnd)%(doctor), it's Tuesday. Don't forget that Aerial Threat and Cargo Escort operations are open today.\e"
+	}
+	if weekday == 3
+	{
+		"\0\s[0]%(docsnd)%(doctor), it's Wednesday. Don't forget that Aerial Threat and Resource Search operations are open today.\e"
+	}
+	if weekday == 4
+	{
+		"\0\s[0]%(docsnd)%(doctor), it's Thursday. Don't forget that Tough Siege and Cargo Escort operations are open today.\e"
+	}
+	if weekday == 5
+	{
+		"\0\s[0]%(docsnd)%(doctor), it's Friday. Don't forget that Aerial Threat and Resource Search operations are open today.\e"
+	}
+	if weekday == 6
+	{
+		"\0\s[0]%(docsnd)%(doctor), it's Saturday. Don't forget that Aerial Threat, Resource Search, Tough Siege, and Cargo Escort operations are open today.\e"
+	}
 	/*
 	if month >= 12
 	{
