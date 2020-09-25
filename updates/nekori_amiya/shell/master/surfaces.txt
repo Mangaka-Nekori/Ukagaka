@@ -25,7 +25,7 @@ collision5,258,213,306,398,Ponytail
 collision6,146,180,194,224,Bust
 
 100interval,bind
-100pattern0,6000,0,overlay,88,72
+100pattern0,6000,0,overlay,153,118
 
 //Collisions define "hot spots" on your ghost where the user can pet or double click them (as defined in mouse.dic). You can see that there are two collisions here, collision0 and collision1. You can add more by copypasting and raising the number, like collision2, collision3, collision4, and so on.
 //The four numbers after that are x/y coordinates. Specifically, the first two numbers are the x/y coordinates of the TOP LEFT corner of your hotspot. The third and fourth numbers are the coordinates of the BOTTOM RIGHT corner of the hotspot. Essentially, this is outlining a rectangle.
